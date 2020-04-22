@@ -1,0 +1,21 @@
+{
+    "name": "youranyese/ElasticSearch-Query-PHP",
+    "description": "ElasticSearch-Query-PHP",
+    "type": "library",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "zhalu",
+            "email": "youranyese@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.3",
+        "elasticsearch/elasticsearch": "v6.7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "pointservice\\": "src/"
+        }
+    }
+}
