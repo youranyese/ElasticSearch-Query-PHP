@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "pointservice\\": "src/"
+            "youranyese\\EsQuery\\": "src/"
         }
     }
 }
