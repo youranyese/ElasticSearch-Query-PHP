@@ -10,6 +10,9 @@
         }
     ],
     "autoload": {
+        "files": [
+            "src/Function.php"
+        ],
         "psr-4": {
             "youranyese\\EsQuery\\": "src/"
         }
