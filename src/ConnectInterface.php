@@ -1,23 +1,32 @@
 <?php
 namespace youranyese\EsQuery;
 
-use Elasticsearch\Client;
-
-/**
- * Created by PhpStorm.
- * Author: 查路
- * Date: 2020/4/23
- * Time: 11:51
- */
-
 interface ConnectInterface
 {
     /**
-     * 获取es客户端
+     * ES客户端
      * Author: 查路
-     * Date: 2020/4/23 13:58
+     * Date: 2020/4/26 10:19
      *
-     * @return Client
+     * @return \Elasticsearch\Client
      */
-    public static function getEsClient() : Client;
+    public static function getClient() : \Elasticsearch\Client;
+
+    /**
+     * ES索引前缀
+     * Author: 查路
+     * Date: 2020/4/26 10:19
+     *
+     * @return string
+     */
+    public static function getIndexPrefix() : string ;
+
+    /**
+     * es索引后缀
+     * Author: 查路
+     * Date: 2020/4/26 11:32
+     *
+     * @return string
+     */
+    public static function getIndexSuffix() : string ;
 }

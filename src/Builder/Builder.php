@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * Author: 查路
- * Date: 2020/4/23
- * Time: 14:48
+ * Date: 2020/4/26
+ * Time: 10:46
  */
 
 namespace youranyese\EsQuery\Builder;
@@ -11,70 +11,55 @@ namespace youranyese\EsQuery\Builder;
 
 class Builder
 {
-    protected $binds = [
-        'query' => [],
-        'sort' => [],
-        'from' => 0,
-        'size' => 15,
-        '_source' => [],
-        'script_fields' => [],
-    ];
-
-    private $ex = [
-        '<','<=','>','>=',
-        'in','not in',
-        'between', 'not between',
-        'or','like','match','distance'
-    ];
-
-    public function where(array $where)
-    {
-        print_r($where);
-        $this->analysisWhere($where);
-
-        return $this;
-    }
-
     /**
-     * 分页
      * Author: 查路
-     * Date: 2020/4/23 16:17
+     * Date: 2020/4/26 10:47
      *
-     * @param int $page
-     * @param int $size
-     *
-     * @return $this
+     * @var QueryBuilder
      */
-    public function page(int $page, int $size)
+    protected $builder;
+    /**
+     * Author: 查路
+     * Date: 2020/4/26 10:51
+     *
+     * @var 带前缀的索引名称
+     */
+    protected $indexName;
+
+    protected $body = [];
+    
+    public function __construct(QueryBuilder $builder)
     {
-        $this->binds['size'] = $size;
-        $this->binds['from'] = ($page-1)*$size;
-
-        return $this;
-    }
-
-    public function sort(array $sort)
-    {
-
-    }
-
-    protected function analysisWhere($where)
-    {
-        foreach ($where as $k => $v) {
-            if (is_string($k)) {
-
-            } else {
-
+        $this->builder = $builder;
+        $prefix = $builder->connect->getIndexPrefix();
+        $suffix = $builder->connect->getIndexSuffix();
+        $index = $builder->model->index;
+        if (empty($index)) {
+            throw new \InvalidArgumentException(get_class($builder->model).'未设置索引名称');
+        }
+        $this->indexName = $prefix.$index.$suffix;
+        foreach ($this->builder->binds as $k => $v) {
+            if (!empty($v) || $v === 0) {
+                $this->body[$k] = $v;
             }
         }
     }
 
-    protected function getStandardWhere(string $field, $where)
+    /**
+     * 组装ES搜索参数
+     * Author: 查路
+     * Date: 2020/4/26 11:10
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function searchData($params = [])
     {
-        if (is_array($where)) {
-            
-        } else {
-            $res = [''];
-        }
+        return array_merge([
+            'index' => $this->indexName,
+            'type' => $this->builder->model->type,
+            'body' => $this->body
+        ], $params);
     }
 }

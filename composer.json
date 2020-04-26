@@ -9,10 +9,6 @@
             "email": "youranyese@163.com"
         }
     ],
-    "require": {
-        "php": ">=7.2.3",
-        "elasticsearch/elasticsearch": "v6.7.2"
-    },
     "autoload": {
         "psr-4": {
             "youranyese\\EsQuery\\": "src/"
