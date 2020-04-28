@@ -83,7 +83,7 @@ abstract class SortScriptBuilder
             'source' => $data['script'],
         ];
         if (isset($data['param']) && !empty($data['param'])) {
-            $script['params'] = $param;
+            $script['params'] = $data['param'];
         }
         $this->sort[] = [
             '_script' => [

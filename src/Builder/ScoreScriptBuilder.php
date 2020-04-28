@@ -57,7 +57,7 @@ abstract class ScoreScriptBuilder
             'source' => $data['script'],
         ];
         if (isset($data['param']) && !empty($data['param'])) {
-            $script['params'] = $param;
+            $script['params'] = $data['param'];
         }
 
         $this->scoreScript = $script;
