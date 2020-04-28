@@ -78,7 +78,7 @@ abstract class FieldBuilder
             throw new \InvalidArgumentException(static::class.'未定义脚本方法：'.$name);
         }
 
-        $data = call([$this, $name], $param);
+        $data = call([$this, $name], [$param]);
         if (!isset($data['script']) || empty($data['script'])) {
             throw new \InvalidArgumentException(static::class.'->'.$name.'()：返回值错误，必含script');
         }
@@ -88,7 +88,7 @@ abstract class FieldBuilder
             'source' => $data['script'],
         ];
         if (isset($data['param']) && !empty($data['param'])) {
-            $script['params'] = $param;
+            $script['params'] = $data['param'];
         }
         $fieldName = $fieldName ? $fieldName : wordsToUnderline($name);
         $this->fieldsScript[$fieldName]['script'] = $script;

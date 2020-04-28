@@ -242,9 +242,28 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * 搜索
+     * Author: 查路
+     * Date: 2020/4/28 10:48
+     *
+     * @param array $params
+     */
     public function select($params = [])
     {
-        $this->handleQuery()->search($params);
+        return $this->handleQuery()->search($params);
+    }
+
+    /**
+     * 记录总数
+     * Author: 查路
+     * Date: 2020/4/28 11:27
+     *
+     * @return mixed
+     */
+    public function count()
+    {
+        return $this->handleQuery()->EsCount();
     }
 
     /**
@@ -365,14 +384,46 @@ class QueryBuilder
         return $this;
     }
 
+    /**
+     * 搜索
+     * Author: 查路
+     * Date: 2020/4/28 10:48
+     *
+     * @param array $params
+     *
+     * @return array
+     */
     protected function search($params = [])
     {
         $builder = new Builder($this);
         $param = $builder->searchData($params);
-        print_r($param);
-        echo json_encode($param['body'], JSON_UNESCAPED_UNICODE);
-        $res = $this->connect::getClient($param)
-            ->search();
-        //print_r($res);
+        $res = $this->connect::getClient()
+            ->search($param);
+        $data = $res['hits'];
+
+        return [
+            'total_page' => ceil($data['total']/$this->binds['size']),
+            'page' => ($this->binds['from']/$this->binds['size']) + 1,
+            'total' => $data['total'],
+            'data' => $data['hits']
+        ];
+    }
+
+    /**
+     * Author: 查路
+     * Date: 2020/4/28 11:27
+     *
+     * @param array $params
+     *
+     * @return mixed
+     */
+    protected function EsCount($params = [])
+    {
+        $builder = new Builder($this);
+        $param = $builder->countData($params);
+        $res = $this->connect::getClient()
+            ->count($param);
+
+        return $res['count'];
     }
 }

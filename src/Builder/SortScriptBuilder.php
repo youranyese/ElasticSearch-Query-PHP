@@ -70,7 +70,7 @@ abstract class SortScriptBuilder
             throw new \InvalidArgumentException(static::class.'->'.$name.'()：排序参数错误,eg:desc|asc');
         }
 
-        $data = call([$this, $name], $param);
+        $data = call([$this, $name], [$param]);
         if (!isset($data['script']) || empty($data['script'])) {
             throw new \InvalidArgumentException(static::class.'->'.$name.'()：返回值错误，必含script');
         }

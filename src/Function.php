@@ -22,7 +22,7 @@ if (! function_exists('call')) {
             $result = $callback(...$args);
         } elseif (is_array($callback)) {
             [$object, $method] = $callback;
-            $result = is_object($object) ? $object->{$method}(...$args) : $object::$method(...$args);
+            $result = is_object($object) ? $object->$method(...$args) : $object::$method(...$args);
         } else {
             $result = call_user_func_array($callback, $args);
         }
