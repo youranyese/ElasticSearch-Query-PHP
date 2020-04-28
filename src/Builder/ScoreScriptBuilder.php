@@ -47,7 +47,7 @@ abstract class ScoreScriptBuilder
             throw new \InvalidArgumentException(static::class.'未定义脚本方法：'.$name);
         }
 
-        $data = call([$this, $name], $param);
+        $data = call([$this, $name], [$param]);
         if (!isset($data['script']) || empty($data['script'])) {
             throw new \InvalidArgumentException(static::class.'->'.$name.'()：返回值错误，必含script');
         }

@@ -21,6 +21,7 @@ use youranyese\EsQuery\ConnectInterface;
  * Class Model
  *
  * @package youranyese\EsQuery\Model
+ *
  * @method QueryBuilder where(array $where) and查询条件
  * @method QueryBuilder whereOr(array $where) 或查询条件
  * @method QueryBuilder whereNot(array $where) 非查询条件
@@ -29,6 +30,7 @@ use youranyese\EsQuery\ConnectInterface;
  * @method QueryBuilder sort(array|SortScriptBuilder $sort)
  * @method QueryBuilder page(int $page, int $size) 分页
  * @method QueryBuilder select($params) 查询
+ * @method QueryBuilder count() 记录总数
  */
 abstract class Model
 {
@@ -113,15 +115,5 @@ abstract class Model
     public function newQuery() : QueryBuilder
     {
         return new QueryBuilder(new static());
-    }
-
-    public function update()
-    {
-
-    }
-
-    public function delete()
-    {
-
     }
 }

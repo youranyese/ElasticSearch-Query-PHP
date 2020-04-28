@@ -59,7 +59,25 @@ class Builder
         return array_merge([
             'index' => $this->indexName,
             'type' => $this->builder->model->type,
-            'body' => $this->body
+            'body' => $this->body,
+        ], $params);
+    }
+
+    /**
+     * 组装ES搜索参数
+     * Author: 查路
+     * Date: 2020/4/26 11:10
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function countData($params = [])
+    {
+        return array_merge([
+            'index' => $this->indexName,
+            'type' => $this->builder->model->type,
+            'body' => ['query'=>$this->builder->binds['query']],
         ], $params);
     }
 }
